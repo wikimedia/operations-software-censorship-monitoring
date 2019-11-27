@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""caida.py: Query the IODA API and get internet outage events for a country.
+"""Query the IODA API and get internet outage events for a country.
 
 This script queries IODA's API for a specific time period and processes the
 result to extract internet outage data. It does this by detecting transitions
@@ -25,8 +25,8 @@ from . import datehelper
 
 HOME_DIR = os.path.expanduser("~")
 
-CAIDA_URL = "https://ioda.caida.org/ioda/data/alerts?" \
-            "human=true&from={0}&until={1}&annotateMeta=true"
+IODA_URL = "https://ioda.caida.org/ioda/data/alerts?" \
+                "human=true&from={0}&until={1}&annotateMeta=true"
 
 
 def pair(iterable):
@@ -92,7 +92,7 @@ def parse_response(response, countries):
 def fetch_data(request_url):
     """Query IODA's API and return the JSON response.
 
-    :param request_url: CAIDA_URL formatted with the date range
+    :param request_url: IODA_URL formatted with the date range
     :return response: JSON object from the API request
     """
     req = urllib.request.Request(request_url)
@@ -110,7 +110,7 @@ def main():
     logging.info("Scanning countries {0}".format(" ".join(args.countries)))
 
     start_epoch, end_epoch = datehelper.time_epoch(args.since, args.until)
-    response = fetch_data(CAIDA_URL.format(start_epoch, end_epoch))
+    response = fetch_data(IODA_URL.format(start_epoch, end_epoch))
     outage_events = parse_response(response, args.countries)
     print(outage_events)
 

@@ -84,7 +84,7 @@ REQUEST = """
 }"""
 
 
-class TestCAIDA(unittest.TestCase):
+class TestIODAFetch(unittest.TestCase):
     def test_pair(self):
         self.assertEqual(iodafetch.pair(('level', 'warning', 'critical')),
                          [('level', 'warning'), ('warning', 'critical')])
