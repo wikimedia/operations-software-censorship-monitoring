@@ -16,6 +16,7 @@ setup(
     url='https://github.com/wikimedia/censorship-monitoring/',
     author='Sukhbir Singh',
     author_email='ssingh@wikimedia.org',
+    keywords=['censorship', 'research', 'ooni', 'ioda'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -27,12 +28,17 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Scientific/Engineering :: Information Analysis',
     ],
-    keywords=['censorship', 'research'],
+
+    install_requires=[
+        "psycopg2-binary>=2.8.4",
+        "Jinja2>=2.10.1",
+    ],
     packages=find_packages(exclude=("test*",)),
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
             'iodafetch = ioda.iodafetch:main',
+            'oonifetch = ooni.oonifetch:main',
         ],
     },
 )

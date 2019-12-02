@@ -1,0 +1,2 @@
+psycopg2-binary>=2.8.4
+Jinja2>=2.10.1

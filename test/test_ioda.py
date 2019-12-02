@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import json
+import logging
+import datetime
 import unittest
 
-from ioda import iodafetch
+from ioda import iodafetch, datehelper
 
 
 REQUEST = """
@@ -85,6 +87,9 @@ REQUEST = """
 
 
 class TestIODAFetch(unittest.TestCase):
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
     def test_pair(self):
         self.assertEqual(iodafetch.pair(('level', 'warning', 'critical')),
                          [('level', 'warning'), ('warning', 'critical')])
@@ -98,6 +103,20 @@ class TestIODAFetch(unittest.TestCase):
                          {'IQ': ['geo.netacuity.AS.IQ.1870', 'geo.netacuity.AS.IQ.1859']})
         self.assertEqual(iodafetch.parse_response(json.loads(REQUEST), ["US"]),
                          {})
+
+    def test_time_epoch(self):
+        start_time = 1568020149
+        end_time = 1570612149
+        start_date = datehelper.validate_date("2019-09-09T09:09:09")
+        end_date = datehelper.validate_date("2019-10-09T09:09:09")
+        self.assertEqual(datehelper.time_epoch(start_date, end_date),
+                         (start_time, end_time))
+
+    def test_validate_date(self):
+        with self.assertRaises(ValueError):
+            datehelper.validate_date("2019-20-09 09:09:09")
+        self.assertEqual(datetime.datetime(2019, 9, 9, 9, 9, 9),
+                         datehelper.validate_date("2019-09-09T09:09:09"))
 
 
 if __name__ == "__main__":

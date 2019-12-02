@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{ report.title }}</title>
+<style>
+  body {
+    font-family: "sans-serif";
+    font-size: small;
+  }
+  table {
+    border-collapse: collapse;
+    margin: 2px;
+  }
+  td {
+    border: 1px solid #ccc;
+  }
+  th, td {
+    padding: 5px;
+  }
+  th {
+    text-align: center;
+  }
+  span {
+    color: red;
+  }
+</style>
+</head>
+<body>
+<h2 id="top">{{ report.title }}</h2>
+<p>{{ report.len_results }} measurements from {{ report.all_countries | length }} countries (Anomalies in {{ report.len_one_anom }} countries)</p>
+<p>Domains: {{ report.domains }}</p>
+{% set ns = namespace(count=1) %}
+{% for country, data in report.all_countries.items() | sort(attribute='0') -%}
+{% if report.anom_countries[country] > 0 -%}
+<a href="#{{country}}">{{ ns.count }}. {{ report.country_codes[country] }}</a> <span>[{{ data|length }} Measurements, {{ report.anom_countries[country] }} Anomalies]{% set ns.count = ns.count + 1 %}</span><br/>
+{% endif -%}
+{% endfor -%}
+{% for country, data in report.all_countries.items() | sort(attribute='0') -%}
+{% if report.anom_countries[country] > 0 -%}
+<table>
+    <h3 id="{{ country }}">{{ report.country_codes[country] }} ({{ data | length }} Measurements, {{ report.anom_countries[country] }} Anomalies)</h3>
+<tr>
+    <th>No.</th>
+    <th>Report Time (UTC)</th>
+    <th>OONI Explorer Link</th>
+    <th>Anomaly</th>
+    <th>ASN</th>
+    <th>URL</th>
+</tr>
+    {% for each in data %}
+<tr>
+    <td>{{ each['count'] }} </td>
+    <td>{{ each['measurement_time'] }} </td>
+    <td><a href="{{each['report_link'] }}">{{ each ['report_id'] }}</a></td>
+    {% if each['blocking']|string() != "false" %}
+    <td><span>{{ each['blocking'] }}</span></td>
+    {% else %}
+    <td>{{ each['blocking'] }}</td>
+    {% endif %}
+    <td>{{ each['asn'] }} </td>
+    <td>{{ each['url'] }} </td>
+</tr>
+    {% endfor %}
+</table>
+<a href="#top">[Top of Page]</a>
+{% endif -%}
+{% endfor -%}
+</body>
+</html>

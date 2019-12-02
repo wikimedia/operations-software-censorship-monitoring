@@ -5,12 +5,12 @@ DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
 def date_yesterday():
-    """Returns yesterday's date formatted to year-month-day."""
+    """Returns yesterday's date formatted to DATE_FORMAT."""
     return datetime.strftime(datetime.now() - timedelta(days=1), DATE_FORMAT)
 
 
 def date_today():
-    """Returns today's date formatted to year-month-day."""
+    """Returns today's date formatted to DATE_FORMAT."""
     return datetime.strftime(datetime.now(), DATE_FORMAT)
 
 
