@@ -34,7 +34,7 @@ setup(
         "Jinja2>=2.10.1",
     ],
     packages=find_packages(exclude=("test*",)),
-    python_requires='>=3.6',
+    python_requires='>=3.5',
     entry_points={
         'console_scripts': [
             'iodafetch = ioda.iodafetch:main',
