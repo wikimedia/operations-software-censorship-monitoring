@@ -13,7 +13,7 @@ For more information about CAIDA's IODA project and their methodology, please
 visit the website: https://ioda.caida.org/ioda.
 """
 
-import os
+import sys
 import json
 import logging
 import argparse
@@ -22,8 +22,6 @@ import collections
 import urllib.request
 
 from . import datehelper
-
-HOME_DIR = os.path.expanduser("~")
 
 IODA_URL = "https://ioda.caida.org/ioda/data/alerts?" \
                 "human=true&from={0}&until={1}&annotateMeta=true"
@@ -107,6 +105,7 @@ def main():
 
     if args.verbose:
         logging.getLogger().setLevel("DEBUG")
+    logging.info("Starting script at {0}".format(datehelper.time_now()))
     logging.info("Scanning countries {0}".format(" ".join(args.countries)))
 
     start_epoch, end_epoch = datehelper.time_epoch(args.since, args.until)
@@ -117,16 +116,9 @@ def main():
 
 def enable_logging():
     """Enable logging and set the log format, log file name and log level."""
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    log_dir = os.path.join(HOME_DIR, ".{}".format(script_name))
-    if not os.path.isdir(log_dir):
-        os.mkdir(log_dir, 0o770)
-
     logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s",
-                        filename=os.path.join(log_dir, script_name+".log"),
-                        filemode='a',
+                        stream=sys.stdout,
                         level=logging.INFO)
-    logging.info("Starting script at {0}".format(datehelper.time_now()))
 
 
 def arg_parser():

@@ -62,8 +62,6 @@ EXPLORER_LINK = "https://explorer.ooni.io/measurement/{0}?input={1}"
 
 TEMPLATE_NAME = "template.html"
 
-HOME_DIR = os.path.expanduser("~")
-
 
 def run_query(date_range):
     """Run a Postgres query within a date range.
@@ -175,6 +173,7 @@ def main():
         logging.error("--since argument requires --until")
         sys.exit(1)
 
+    logging.info("Starting script at {0}".format(datehelper.time_now()))
     date_yesterday, date_today = (datehelper.date_yesterday(),
                                   datehelper.date_today())
     if args.since and args.until:
@@ -233,16 +232,9 @@ def arg_parser():
 
 def enable_logging():
     """Enable logging and set the log format, log file name and log level."""
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    log_dir = os.path.join(HOME_DIR, ".{}".format(script_name))
-    if not os.path.isdir(log_dir):
-        os.mkdir(log_dir, 0o770)
-
     logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s",
-                        filename=os.path.join(log_dir, script_name+".log"),
-                        filemode='a',
+                        stream=sys.stdout,
                         level=logging.INFO)
-    logging.info("Starting script at {0}".format(datehelper.time_now()))
 
 
 if __name__ == "__main__":

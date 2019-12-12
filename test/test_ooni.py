@@ -2,7 +2,6 @@ import unittest
 import argparse
 import datetime
 import logging
-import unittest.mock
 
 from psycopg2.extras import RealDictRow
 
