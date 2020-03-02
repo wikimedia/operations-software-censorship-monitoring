@@ -1,0 +1,20 @@
+Source: cescout
+Section: utils
+Priority: optional
+Maintainer: Sukhbir Singh <ssingh@wikimedia.org>
+Build-Depends: debhelper (>= 11), dh-python, python3-all, python3-setuptools, python3-psycopg2, python3-dev, python3-jinja2, python3-requests, python3-yaml, libpq-dev, python3-iso3166
+Standards-Version: 3.9.8
+Homepage: https://github.com/wikimedia/operations-software-censorship-monitoring/
+
+Package: cescout
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: Censorship monitoring toolkit
+ cescout is a censorship monitoring toolkit that queries multiple internet
+ measurement projects to identify censorship events and internet outages. It
+ serves as an interface to collect data from different projects to identify
+ such events in a given country and uses that information to generate a report
+ that helps distinguish between censorship of particular websites from broader
+ internet outages or shutdowns.
+ .
+ cescout does not perform any internet measurements by itself.

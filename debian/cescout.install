@@ -1,0 +1,2 @@
+config/cescout.cfg /etc/cescout/
+config/report.template /etc/cescout/
