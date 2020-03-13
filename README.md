@@ -12,8 +12,6 @@ For the OONI tests, a copy of OONI's `metadb` is required; please see the OONI d
 
 ## Install
 
-(We are working on a Debian package to improve the installation process, till then...)
-
 To install the package, run:
 
 ```
@@ -21,13 +19,6 @@ To install the package, run:
 ```
 
 You need root permissions for the installation but not for running `cescout`.
-
-If you want to use the package without installing,
-
-```
-python3 -m cescout.main
-```
-
 
 ## Usage
 
@@ -145,8 +136,6 @@ All projects take as input a two-letter country code and a time period to run th
 ## Configuration File
 
 During installation, the script copies the configuration files to `/etc/cescout`. To override the system-wide settings, copy the files from `/etc/cescout` (or `config/`) to `$HOME/.config/cescout` and edit as required.
-
-If you run the script without installing, it uses the configuration files from the root directory `config/`.
 
 ## OONI
 
