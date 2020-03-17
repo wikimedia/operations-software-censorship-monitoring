@@ -20,6 +20,8 @@ To install the package, run:
 
 You need root permissions for the installation but not for running `cescout`.
 
+Note that you may need additional packages to install the `psycopg2` dependency; on Debian, `apt install python3-dev libpq-dev gcc`.
+
 ## Usage
 
 ```
@@ -77,7 +79,7 @@ Censorship Report for 'China' [2020-02-20 00:00:00 to 2020-02-25 14:48:48]
 
 Note that if you don't pass `--until`, it assumes the current time.
 
-By default, a report is generated (formatted according to `cescout/config/report.template`) once the measurement data is processed. To return the raw results in JSON instead, pass the `--raw` argument.
+By default, a report is generated (formatted according to `config/report.template`) once the measurement data is processed. To return the raw results in JSON instead, pass the `--raw` argument.
 
 ```
 $ cescout --country CN --since 2020-02-20 --skip-ioda --skip-ripe --raw | python3 -m json.tool
@@ -151,7 +153,7 @@ This project assumes you have a local copy of OONI's `metadb` that is running an
 
 [From https://ioda.caida.org/]
 
-Queries IODA's API and returns internet outage data as per IODA.  An internet outage -- as defined by IODA but not made available in the API -- is an event where there is a transition from `normal` to `warning` or `critical` levels in the measurement time frame.
+Queries IODA's API and returns internet outage data as per IODA.  An internet outage -- as defined by IODA but not made available in their API -- is an event where there is a transition from `normal` to `warning` or `critical` levels in the measurement time frame.
 
 ## RIPE
 

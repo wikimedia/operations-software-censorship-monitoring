@@ -3,23 +3,23 @@ Censorship Report for '{{ data.country }}' [{{ data.since }} to {{ data.until }}
 {% for project, value in data['projects'].items() %}
   {% if value['ran_test'] %}
     {% if value['data'] %}
-      {% if project == "ooni" %}
+      {% if project == 'ooni' %}
         {% if data['config'] -%}
           [{{ project }}] domains: {{ data['config']['ooni']['domains']|join(", ") }}
         {% endif -%}
         [{{ project }}] ({{ value['data']['len_blocking'] }} / {{ value['data']['len_all'] }}) anomalous measurements
         {% for measurement in value['data']['measurements'] -%}
-          [{{ project }}] {{ measurement['url'] }} {{ '[!]' if not measurement['blocking'] == "false" else "[ok]" }}
+          [{{ project }}] {{ measurement['url'] }} {{ '[!]' if not measurement['blocking'] == 'false' else '[ok]' }}
         {% endfor %}
       {% endif %}
-      {% if project == "ioda" %}
+      {% if project == 'ioda' %}
         {% if value['data']['is_outage'] -%}
           [{{ project }}] internet outage observed. more information at {{ value['data']['url'] }}
         {% else -%}
           [{{ project }}] no internet outage observed
         {% endif %}
       {% endif %}
-      {% if project == "ripe" %}
+      {% if project == 'ripe' %}
         {% for each in value['data'] -%}
           [{{ project }}] ASN {{ each }}: {{ data.current }}: {{ value['data'][each]['current'] }} (current), {{ data.since }}: {{ value['data'][each]['since'] }} (since), {{ data.until }}: {{ value['data'][each]['until'] }} (until)
         {% endfor -%}

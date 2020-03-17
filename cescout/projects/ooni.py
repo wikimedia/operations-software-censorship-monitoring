@@ -106,8 +106,8 @@ def process_results(result):
         data["report_link"] = encode_link
 
         # Ignore measurements that have 0 as the ASN as these are not useful
-        # for us: these measurements are also typically missing the country so
-        # there isn't much we can do.
+        # for us: these measurements are also missing the country so there
+        # isn't much we can do.
         if data["asn"] == 0:
             logging.debug("Skipped test {0}: "
                           "invalid ASN".format(data["report_id"]))

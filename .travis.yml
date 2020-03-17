@@ -3,6 +3,9 @@ language: python
 python:
   - "3.7"
 
+before_install:
+  - sudo apt-get -y install python3-dev libpq-dev gcc
+
 install:
   - pip install --upgrade tox codecov
 

@@ -16,7 +16,7 @@ extras_require = {
 }
 
 install_requires = [
-    "psycopg2-binary>=2.8.4",
+    "psycopg2>=2.8.4",
     "Jinja2>=2.10.1",
     "requests>=2.22.0",
     "pyyaml>=5.3",
