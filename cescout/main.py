@@ -176,11 +176,11 @@ def run(argv=None):
     enable_logging()
 
     args = arg_parser(argv, projects.__all__)
-    if not args.until:
-        args.until = common.date_today()
-        logging.debug("Argument `--until' not passed; assuming current time")
     if args.verbose:
         logging.getLogger().setLevel("DEBUG")
+    if args.until is None:
+        args.until = common.date_today()
+        logging.debug("`--until' not passed; assuming current time in UTC")
 
     measurements = get_measurements(projects.__all__, vars(args))
 

@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 import iso3166
 
@@ -17,11 +17,11 @@ def date_today():
 
 
 def time_now():
-    """Returns the current time in ISO format with microsecond=0.
+    """Returns the current time in UTC in ISO format with microsecond=0.
 
     :return: string
     """
-    return datetime.now().replace(microsecond=0).isoformat()
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
 def validate_date(date):

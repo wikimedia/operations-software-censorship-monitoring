@@ -1,5 +1,7 @@
 # cescout: censorship monitoring toolkit
 
+[![Build Status](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring.svg?branch=master)](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring) [![Codecov](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring/branch/master/graphs/badge.svg?branch=master)
+
 `cescout` is a censorship monitoring toolkit that queries multiple internet measurement projects to identify censorship events and internet outages. It serves as an interface to collect data from different projects to identify such events in a given country and uses that information to generate a report that helps distinguish between censorship of particular websites from broader internet outages or shutdowns. `cescout` does not perform any internet measurements by itself.
 
 Currently it queries the following projects: OONI (ooni.org), for information about censorship of websites; IODA (ioda.caida.org), for internet outages (and shutdowns); and RIPE (stat.ripe.net), to fetch routing information that is used to correlate information from OONI and IODA.
