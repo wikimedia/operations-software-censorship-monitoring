@@ -1,6 +1,6 @@
 # cescout: censorship monitoring toolkit
 
-[![Build Status](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring.svg?branch=master)](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring) [![Codecov](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring/branch/master/graphs/badge.svg?branch=master)
+[![Build Status](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring.svg?branch=master)](https://travis-ci.org/wikimedia/operations-software-censorship-monitoring) [![Codecov](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/wikimedia/operations-software-censorship-monitoring?branch=master)
 
 `cescout` is a censorship monitoring toolkit that queries multiple internet measurement projects to identify censorship events and internet outages. It serves as an interface to collect data from different projects to identify such events in a given country and uses that information to generate a report that helps distinguish between censorship of particular websites from broader internet outages or shutdowns. `cescout` does not perform any internet measurements by itself.
 

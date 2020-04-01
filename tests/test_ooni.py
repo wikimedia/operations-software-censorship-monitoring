@@ -48,7 +48,7 @@ class TestOONI(unittest.TestCase):
                                    ('input', 'https://fr.wikipedia.org/'),
                                    ('blocking', 'false'),
                                    ('http_experiment_failure', "unknown_failure")])]
-        self.config = {"db_name": "metadb", "db_user": "postgres",
+        self.config = {"database": {"dbname": "metadb", "user": "postgres"},
                        "domains": ["wikipedia.org"]}
         self.expected_results = {'len_all': 2, 'len_blocking': 1,
                                  'measurements': [

@@ -57,7 +57,7 @@ def run_query(country, since, until, **query):
     :return result: database query result
     """
     try:
-        db_name, db_user = query["ooni"]["db_name"], query["ooni"]["db_user"]
+        db_config = query["ooni"]["database"]
         domains = ["%{0}%".format(each) for each in query["ooni"]["domains"]]
     except KeyError:
         logging.error("Unable to read config settings for OONI's test."
@@ -65,7 +65,7 @@ def run_query(country, since, until, **query):
         return
 
     try:
-        conn = psycopg2.connect("dbname={0} user={1}".format(db_name, db_user))
+        conn = psycopg2.connect(**db_config)
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     except psycopg2.OperationalError as e:
         logging.error("Unable to connect to the database: {0}.".format(e))

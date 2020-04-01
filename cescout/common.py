@@ -13,7 +13,7 @@ def date_today():
 
     :return: datetime object
     """
-    return datetime.fromisoformat(time_now())
+    return datetime.fromisoformat(time_now()).replace(tzinfo=None)
 
 
 def time_now():
