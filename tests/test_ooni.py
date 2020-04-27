@@ -10,8 +10,8 @@ from cescout.projects import ooni
 
 class TestOONI(unittest.TestCase):
     def setUp(self):
-        self.since = datetime.datetime.fromisoformat("2020-02-01T10:00:00")
-        self.until = datetime.datetime.fromisoformat("2020-02-02T10:00:00")
+        self.date_range = (datetime.datetime.fromisoformat("2020-02-01T10:00:00"),
+                           datetime.datetime.fromisoformat("2020-02-02T10:00:00"))
         self.query = [RealDictRow([('measurement_start_time', datetime.datetime(2020, 2, 11, 6, 53, 37)),
                                    ('report_id', '20200211T065336Z_AS4134_4M0eNXqQCp1mrHumzmR73pHhLRMyVh1dAc4VYcoICjBAkqjxlZ'),
                                    ('probe_asn', 4134),
@@ -63,17 +63,17 @@ class TestOONI(unittest.TestCase):
 
     def test_run_query(self):
         with patch("cescout.projects.ooni.run_query", return_value=self.query):
-            self.assertEqual(ooni.run_query("CN", self.since, self.until, self.config),
+            self.assertEqual(ooni.run_query("CN", *self.date_range, **self.config),
                              self.query)
         with patch("psycopg2.connect") as mock:
             mock.return_value.cursor.return_value.fetchall.return_value = [("some_value")]
-            self.assertEqual(ooni.run_query("CN", self.since, self.until, **self.config),
+            self.assertEqual(ooni.run_query("CN", *self.date_range, **self.config),
                              None)
             ooni_config = {"ooni": self.config}
-            self.assertEqual(ooni.run_query("CN", self.since, self.until, **ooni_config),
+            self.assertEqual(ooni.run_query("CN", *self.date_range, **ooni_config),
                              [("some_value")])
             mock.return_value.cursor.side_effect = OperationalError()
-            self.assertEqual(ooni.run_query("CN", self.since, self.until, **ooni_config),
+            self.assertEqual(ooni.run_query("CN", *self.date_range, **ooni_config),
                              None)
 
     def test_process_results(self):
@@ -82,17 +82,11 @@ class TestOONI(unittest.TestCase):
         self.assertNotEqual(ooni.process_results(self.query),
                             self.unexpected_results)
 
-    def test_format_date(self):
-        self.assertEqual(ooni.format_date(self.since),
-                         "2020-02-01")
-        self.assertNotEqual(ooni.format_date(self.since),
-                            "2020-02-01T10:00:00")
-
     def test_run(self):
         with patch("cescout.projects.ooni.run_query") as mock:
             mock.side_effect = [self.query, None]
-            self.assertEqual(ooni.run("CN", 1, self.since, self.until, self.config),
+            self.assertEqual(ooni.run("CN", 1, *self.date_range, **self.config),
                              self.expected_results)
-            self.assertEqual(ooni.run("CN", 1, self.since, self.until, self.config),
+            self.assertEqual(ooni.run("CN", 1, *self.date_range, **self.config),
                              None)
-            mock.assert_called_with("CN", "2020-02-01", "2020-02-02")
+            mock.assert_called_with("CN", *self.date_range, **self.config)

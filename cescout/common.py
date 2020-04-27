@@ -19,7 +19,7 @@ def date_today():
 def time_now():
     """Returns the current time in UTC in ISO format with microsecond=0.
 
-    :return: string
+    :return: current time represented in ISO format (string)
     """
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 

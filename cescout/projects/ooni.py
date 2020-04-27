@@ -7,7 +7,6 @@ used to make read-only queries to the database.
 """
 
 import collections
-import datetime
 import logging
 import urllib.parse
 
@@ -38,7 +37,7 @@ DB_QUERY = """
 EXPLORER_LINK = "https://explorer.ooni.io/measurement/{0}?input={1}"
 
 
-def run_query(country, since, until, **query):
+def run_query(country, *date_range, **query):
     """Run a Postgres query based on input parameters.
 
     Query parameters are specified by the `cescout.cfg' file and include the
@@ -51,8 +50,7 @@ def run_query(country, since, until, **query):
     not yet.
 
     :param country: two-letter country code to run query against
-    :param since: date (year-month-day) to run query since (from)
-    :param until: date (year-month-day) to run query until (to)
+    :param date_range: tuple of date: since, until (ISO format)
     :param query: dict with db information: name, user, domains
     :return result: database query result
     """
@@ -71,7 +69,7 @@ def run_query(country, since, until, **query):
         logging.error("Unable to connect to the database: {0}.".format(e))
         return
 
-    cur.execute(DB_QUERY, (domains, country, since, until))
+    cur.execute(DB_QUERY, (domains, country, *date_range))
     logging.debug("Query: {0}".format(cur.query))
 
     result = cur.fetchall()
@@ -141,18 +139,6 @@ def process_results(result):
     return all_measurements
 
 
-def format_date(date):
-    """Format a datetime object and return a string.
-
-    For OONI, we want all measurements in a 24-hour period and therefore we
-    strip away the time so that the query is made for a complete day.
-
-    :param date: datetime object
-    :return str: string formatted to %Y-%m-%d
-    """
-    return datetime.datetime.strftime(date, "%Y-%m-%d")
-
-
 def run(country, asns, *date_range, **config):
     """Entry point for the OONI module.
 
@@ -164,9 +150,8 @@ def run(country, asns, *date_range, **config):
     :return measurements: defaultdict of measurements for :param country:
                           and domains specified by :param config:
     """
-    since, until = format_date(date_range[0]), format_date(date_range[1])
     # Run the database query.
-    result = run_query(country, since, until, **config)
+    result = run_query(country, *date_range, **config)
     # It's possible that no results were returned from the query in case there
     # are no measurements from a country for the period specified.
     if result is None:
