@@ -23,9 +23,13 @@ install_requires = [
     "iso3166>=1.0.1",
 ]
 
+setup_requires = [
+    "setuptools_scm",
+]
+
 setup(
     name="cescout",
-    version="0.1.0",
+    use_scm_version=True,
     description="Censorship monitoring toolkit",
     long_description=long_description,
     url="https://github.com/wikimedia/censorship-monitoring/",
@@ -50,6 +54,7 @@ setup(
     ],
     install_requires=install_requires,
     extras_require=extras_require,
+    setup_requires=setup_requires,
     python_requires=">=3.7",
     entry_points={
         "console_scripts": [
