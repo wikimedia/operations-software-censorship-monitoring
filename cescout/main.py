@@ -27,6 +27,7 @@ import jinja2
 
 import yaml
 
+from . import __version__
 from . import common
 from . import projects
 
@@ -93,6 +94,9 @@ def arg_parser(args, projects):
     parser.add_argument("-r", "--raw",
                         action="store_true",
                         help="return the raw JSON results instead of a report")
+    parser.add_argument("--version",
+                        action="version",
+                        version="%(prog)s {0}".format(__version__))
     for project in projects:
         parser.add_argument("--skip-{0}".format(project),
                             action="store_true",
