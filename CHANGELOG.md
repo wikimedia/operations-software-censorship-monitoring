@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 (2020-04-29)
+
+**Added**
+
+- Version parameter to cescout that displays the current version. [90df95c and
+  313d63d]
+
+**Changed**
+
+- `test_start_time` for the OONI `metadb` query: we no longer strip the time
+  information and run the query for the time period as specified by the user.
+  [f7b0d9f]
+
 ## 0.1.1 (2020-04-02)
 
 **Added**
